@@ -665,14 +665,16 @@
       showWhatsApp: true,                     // set to false to hide every WhatsApp button until verified
       whatsappMessage: "Hello, I would like to make an enquiry.",
       address: "Along Camp, 1 Alhaji Fatai Shittu Street, by Alhaji Hassan Bus Stop, Davies Road, Ayobo, Lagos, Nigeria",
-      hours: "24 hours"
+      hours: "24 hours",
+      mapsUrl: "https://maps.app.goo.gl/4BaspboCZ38m3Chs8?g_st=ic"
       // FUTURE: add appointmentApiUrl / paymentProvider settings here (never put secret keys in this file).
     };
 
     function applyConfig() {
       const tel  = "tel:" + CONFIG.phoneInternational;
       const wa   = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(CONFIG.whatsappMessage);
-      const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.address);
+      const maps = CONFIG.mapsUrl ||
+"https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.address);
 
       document.querySelectorAll('[data-link="tel"]').forEach(function (a) { a.href = tel; });
       document.querySelectorAll('[data-link="whatsapp"]').forEach(function (a) {
