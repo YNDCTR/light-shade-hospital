@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Light Shade Hospital and Maternity Home | Ayobo, Lagos</title>
+  <meta name="description" content="Light Shade Hospital and Maternity Home, Davies Road, Ayobo, Lagos. Medical services, maternity care, diagnostics and emergency contact. Open 24 hours.">
+  <meta name="theme-color" content="#0B2545">
+
+  <!-- The logo file must be named exactly: logo.png (all lowercase) and sit next to this file -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <style>
+    /* =========================================================
+       1. DESIGN TOKENS  (change colours/fonts here, once)
+       FUTURE: move this whole <style> block into styles.css
+       ========================================================= */
+    :root {
+      --navy: #0B2545;
+      --navy-deep: #071A31;
+      --blue: #0568B5;        /* taken from the logo */
+      --blue-dark: #04508D;
+      --teal: #0E7C7B;        /* restrained accent */
+      --teal-soft: #E4F3F2;
+      --ink: #16263A;
+      --muted: #566274;
+      --line: #DCE5EE;
+      --mist: #F4F8FB;
+      --on-dark-muted: #B9C8DA;
+
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-head: Georgia, "Times New Roman", serif;
+
+      --radius: 0.9rem;
+      --shadow: 0 1px 2px rgba(11, 37, 69, 0.06), 0 8px 20px rgba(11, 37, 69, 0.06);
+    }
+
+    /* =========================================================
+       2. BASE
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.6;
+    }
+    img, svg { max-width: 100%; }
+    h1, h2, h3 { font-family: var(--font-head); color: var(--navy); line-height: 1.15; margin: 0 0 0.75rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--blue); }
+    [hidden] { display: none !important; }
+    section[id] { scroll-margin-top: 5rem; }   /* stops the sticky header covering section titles */
+
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+    .on-dark :focus-visible { outline-color: #fff; }
+
+    .container { width: min(100% - 2rem, 70rem); margin-inline: auto; }
+    .section { padding: 3.5rem 0; }
+    .section--mist { background: var(--mist); }
+    @media (min-width: 62em) { .section { padding: 5rem 0; } }
+    .section-head { max-width: 40rem; margin-bottom: 2rem; }
+    .section-head h2, .split h2 { font-size: clamp(1.75rem, 4.5vw, 2.4rem); }
+    .section-head p { color: var(--muted); font-size: 1.05rem; }
+
+    .skip-link {
+      position: absolute; left: 1rem; top: -4rem; z-index: 100;
+      background: var(--navy); color: #fff; padding: 0.7rem 1rem; border-radius: 0.5rem;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .icon {
+      width: 1.2em; height: 1.2em; flex: none;
+      fill: none; stroke: currentColor; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* =========================================================
+       3. BUTTONS
+       ========================================================= */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      min-height: 2.9rem; padding: 0.65rem 1.25rem;
+      border: 2px solid transparent; border-radius: 0.75rem;
+      font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-outline { background: #fff; color: var(--navy); border-color: var(--navy); }
+    .btn-outline:hover { background: var(--mist); }
+    .btn-light { background: #fff; color: var(--navy); }
+    .btn-light:hover { background: var(--teal-soft); }
+    .btn-outline-light { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.7); }
+    .btn-outline-light:hover { background: rgba(255, 255, 255, 0.12); }
+    .btn-sm { min-height: 2.75rem; padding: 0.45rem 0.8rem; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn-row .btn { flex: 1 1 100%; }
+    @media (min-width: 40em) { .btn-row .btn { flex: 0 0 auto; } }
+
+    /* =========================================================
+       4. HEADER + NAVIGATION
+       ========================================================= */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner { display: flex; align-items: center; gap: 0.5rem; min-height: 4.25rem; }
+
+    .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; min-width: 0; }
+    .logo {
+      width: 2.75rem; height: 2.75rem; flex: none;
+      aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 50%;  /* trims the white margins on screen only */
+      border-radius: 50%;
+    }
+    .brand-name { display: block; min-width: 0; font-family: var(--font-head); color: var(--navy); line-height: 1.15; }
+    .brand-main { display: block; font-weight: 700; font-size: 0.95rem; }
+    .brand-sub { display: block; font-size: 0.8rem; color: var(--muted); }
+    @media (min-width: 26em) { .brand-main { font-size: 1.05rem; } .brand-sub { font-size: 0.85rem; } }
+
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; }
+    /* "Call now" text is hidden on very narrow phones but still read by screen readers */
+    .call-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    @media (min-width: 26em) {
+      .call-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+    }
+
+    .menu-toggle {
+      width: 2.75rem; height: 2.75rem; padding: 0;
+      display: grid; place-content: center; gap: 0.3rem;
+      border: 1px solid var(--line); border-radius: 0.75rem; background: #fff; cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block; width: 1.2rem; height: 2px; background: var(--navy); border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(calc(0.3rem + 2px)) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(calc(-0.3rem - 2px)) rotate(-45deg); }
+
+    /* Mobile menu: a panel that drops down under the header */
+    .site-nav {
+      display: none;
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: #fff; border-bottom: 1px solid var(--line);
+      box-shadow: 0 14px 24px rgba(11, 37, 69, 0.12);
+    }
+    .site-nav.is-open { display: block; }
+    .site-nav ul { list-style: none; margin: 0; padding: 0.5rem 1rem 1rem; }
+    .site-nav a {
+      display: block; padding: 0.85rem 0.75rem; border-radius: 0.6rem;
+      color: var(--navy); font-weight: 600; text-decoration: none;
+    }
+    .site-nav a:hover, .site-nav a[aria-current="location"] { background: var(--mist); color: var(--blue); }
+
+    /* Desktop: menu becomes a normal row, hamburger button disappears */
+    @media (min-width: 62em) {
+      .menu-toggle { display: none; }
+      .site-nav {
+        display: block; position: static; order: 2; margin-left: auto;
+        background: none; border: 0; box-shadow: none;
+      }
+      .site-nav ul { display: flex; gap: 0.25rem; padding: 0; }
+      .site-nav a { padding: 0.55rem 0.8rem; }
+      .header-actions { order: 3; margin-left: 1rem; }
+    }
+
+    /* =========================================================
+       5. HERO
+       ========================================================= */
+    .hero { padding: 2.5rem 0 3.5rem; }
+    .hero-grid { display: grid; gap: 2rem; align-items: center; }
+    .hero h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); letter-spacing: -0.01em; }
+    .lead { font-size: 1.12rem; color: var(--muted); max-width: 36rem; margin-bottom: 1.5rem; }
+    @media (min-width: 62em) {
+      .hero { padding: 4.5rem 0 5.5rem; }
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; }
+    }
+
+    .visit-card { background: var(--navy); color: #fff; border-radius: 1.25rem; padding: 1.5rem; box-shadow: var(--shadow); }
+    .ecg { width: 100%; height: auto; margin-bottom: 0.25rem; }
+    .ecg path {
+      fill: none; stroke: #5FD1CC; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 1; animation: draw-line 2.4s ease-out 0.3s both;   /* the one animated moment on the page */
+    }
+    @keyframes draw-line { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    .illustration-note { font-size: 0.8rem; color: var(--on-dark-muted); margin: 0 0 1.25rem; }
+    .visit-card dl { margin: 0; display: grid; gap: 1rem; }
+    .visit-card dt { font-size: 0.9rem; color: var(--on-dark-muted); }
+    .visit-card dd { margin: 0; font-size: 1.05rem; font-weight: 600; }
+    .visit-card a { color: #fff; }
+
+    /* =========================================================
+       6. ABOUT
+       ========================================================= */
+    .split { display: grid; gap: 2rem; }
+    @media (min-width: 62em) { .split { grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; } }
+    .facts { margin: 0; display: grid; gap: 1.25rem; padding: 1.5rem; background: var(--mist); border-radius: var(--radius); }
+    .facts dt { font-weight: 700; color: var(--navy); }
+    .facts dd { margin: 0; color: var(--muted); }
+
+    /* =========================================================
+       7. SERVICES
+       ========================================================= */
+    .service-group { display: grid; gap: 1.25rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+    .service-group:first-of-type { border-top: 0; padding-top: 0; }
+    .service-group h3 { font-size: 1.4rem; }
+    .service-group > div > p { color: var(--muted); margin: 0; }
+    @media (min-width: 62em) { .service-group { grid-template-columns: 16rem 1fr; gap: 2.5rem; } }
+
+    .service-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); }
+    .service-grid li { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--teal); border-radius: 0.75rem; padding: 1.1rem; box-shadow: var(--shadow); }
+    .service-grid strong { display: block; color: var(--navy); margin-bottom: 0.25rem; }
+    .service-grid span { color: var(--muted); font-size: 0.95rem; }
+
+    /* =========================================================
+       8. MATERNITY + DIAGNOSTICS
+       ========================================================= */
+    .maternity-panel { background: var(--teal-soft); border-radius: 1.25rem; padding: 1.75rem; }
+    .maternity-panel h3 { font-size: 1.25rem; }
+    .check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+    .check-list li { display: flex; align-items: center; gap: 0.7rem; font-weight: 600; color: var(--navy); }
+    .check-list li::before { content: ""; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--teal); flex: none; }
+    .maternity-panel p { margin: 1.25rem 0 0; font-size: 0.95rem; color: var(--ink); }
+
+    .diag-grid { display: grid; gap: 1rem; }
+    @media (min-width: 48em) { .diag-grid { grid-template-columns: repeat(3, 1fr); } }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }
+    .card .icon { width: 2rem; height: 2rem; color: var(--teal); margin-bottom: 0.75rem; }
+    .card h3 { font-size: 1.2rem; }
+    .card p { color: var(--muted); margin: 0; }
+    .diag-note { margin: 1.5rem 0 1.25rem; color: var(--muted); }
+
+    /* =========================================================
+       9. EMERGENCY
+       ========================================================= */
+    .emergency { background: var(--navy); color: #fff; }
+    .emergency h2 { color: #fff; font-size: clamp(1.75rem, 5vw, 2.4rem); }
+    .emergency p { color: var(--on-dark-muted); max-width: 34rem; }
+    .emergency-inner { display: grid; gap: 1.75rem; align-items: center; }
+    .emergency-actions { display: grid; gap: 0.9rem; justify-items: start; }
+    .emergency-number {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: #fff; color: var(--navy); text-decoration: none;
+      font-family: var(--font-head); font-weight: 700; font-size: clamp(1.6rem, 7vw, 2.4rem);
+      padding: 0.9rem 1.4rem; border-radius: 1rem;
+    }
+    .emergency-number:hover { background: var(--teal-soft); }
+    @media (min-width: 62em) { .emergency-inner { grid-template-columns: 1.2fr 1fr; gap: 3rem; } }
+
+    /* =========================================================
+       10. CONTACT
+       ========================================================= */
+    .contact-grid { display: grid; gap: 1rem; }
+    @media (min-width: 48em) { .contact-grid { grid-template-columns: repeat(3, 1fr); } }
+    .contact-grid .card { display: flex; flex-direction: column; gap: 0.5rem; }
+    .contact-grid h3 { font-size: 1.15rem; margin: 0; }
+    .contact-grid address { font-style: normal; color: var(--muted); }
+    .contact-grid .big { font-size: 1.35rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+    .contact-grid .btn-row { margin-top: auto; padding-top: 0.75rem; }
+    .contact-note { margin-top: 1.5rem; color: var(--muted); font-size: 0.95rem; }
+
+    /* =========================================================
+       11. FOOTER
+       ========================================================= */
+    .site-footer { background: var(--navy-deep); color: var(--on-dark-muted); padding: 3rem 0 1.5rem; }
+    .footer-grid { display: grid; gap: 2rem; }
+    @media (min-width: 48em) { .footer-grid { grid-template-columns: 1.4fr 1fr 1.2fr; } }
+    .footer-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .logo--footer { width: 3.5rem; height: 3.5rem; background: #fff; }
+    .footer-brand strong { font-family: var(--font-head); color: #fff; font-size: 1.1rem; line-height: 1.2; }
+    .site-footer h2 { font-family: var(--font-body); font-size: 1rem; color: #fff; margin-bottom: 0.75rem; }
+    .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+    .site-footer a { color: #fff; }
+    .site-footer address { font-style: normal; margin-bottom: 0.5rem; }
+    .footer-bottom { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.85rem; }
+    .footer-bottom p { margin: 0 0 0.4rem; }
+
+    /* =========================================================
+       12. REDUCED MOTION (for people who turn animation off on their phone)
+       ========================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Icon library: drawn once here, reused everywhere with <use href="#i-name"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18.2A2 2 0 0 0 6.8 21h10.4a2 2 0 0 0 1.8-2.8L14 9V3"/><path d="M7.5 15h9"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M12 8v8M9 11.5h6"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12c2-5 4-5 6 0s4 5 6 0 4-5 6-1"/><path d="M2 18h20M2 6h20" opacity=".35"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- =====================================================
+       HEADER  (logo + name + menu + call button)
+       ===================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Light Shade Hospital and Maternity Home, back to top">
+        <!-- alt is empty because the hospital name is written right beside the logo -->
+        <img class="logo" src="logo.png" alt="" width="44" height="44" decoding="async">
+        <span class="brand-name">
+          <span class="brand-main">Light Shade Hospital</span>
+          <span class="brand-sub">and Maternity Home</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <!-- href below is a safe default; the CONFIG block at the bottom keeps it in sync -->
+        <a class="btn btn-primary btn-sm" data-link="tel" href="tel:+2348060777760">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+          <span class="call-label">Call now</span>
+        </a>
+        <button class="menu-toggle" id="menu-toggle" type="button"
+                aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#maternity">Maternity</a></li>
+          <li><a href="#diagnostics">Diagnostics</a></li>
+          <li><a href="#emergency">Emergency</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <h1 id="hero-title">Caring for families in Ayobo, Lagos, day and night</h1>
+          <p class="lead">Light Shade Hospital and Maternity Home offers general medical care, maternity services, diagnostics, emergency care and more, on Davies Road in Ayobo.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" data-link="tel" href="tel:+2348060777760">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+              Call <span data-text="phone">0806 077 7760</span>
+            </a>
+            <a class="btn btn-outline" data-link="maps" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=Along%20Camp%2C%201%20Alhaji%20Fatai%20Shittu%20Street%2C%20by%20Alhaji%20Hassan%20Bus%20Stop%2C%20Davies%20Road%2C%20Ayobo%2C%20Lagos%2C%20Nigeria">
+              <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+              Get directions
+            </a>
+            <a class="btn btn-outline" href="#services">View services</a>
+          </div>
+        </div>
+
+        <aside class="visit-card on-dark" aria-label="Quick facts">
+          <!-- ILLUSTRATION ONLY: a decorative heartbeat line. It is not a photograph of the hospital. -->
+          <svg class="ecg" viewBox="0 0 400 80" aria-hidden="true" focusable="false">
+            <path pathLength="1" d="M0 40 H120 L138 40 L153 10 L173 70 L188 40 H255 L270 27 L285 40 H400"/>
+          </svg>
+          <p class="illustration-note">Illustration only. Not a photograph of the hospital.</p>
+          <dl>
+            <div><dt>Open</dt><dd data-text="hours">24 hours</dd></div>
+            <div><dt>Call</dt><dd><a data-link="tel" href="tel:+2348060777760"><span data-text="phone">0806 077 7760</span></a></dd></div>
+            <div><dt>Visit</dt><dd data-text="address">Along Camp, 1 Alhaji Fatai Shittu Street, by Alhaji Hassan Bus Stop, Davies Road, Ayobo, Lagos, Nigeria</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         ABOUT  (only supplied facts. Add more where the comments say.)
+         ===================================================== -->
+    <section class="section section--mist" id="about" aria-labelledby="about-title">
+      <div class="container split">
+        <div>
+          <h2 id="about-title">About the hospital</h2>
+          <p>Light Shade Hospital and Maternity Home is a hospital and maternity home in Ayobo, Lagos. It brings general medical care, emergency care, maternity services, diagnostics and therapy services together under one roof.</p>
+          <p>The hospital is open <span data-text="hours">24 hours</span>, so you can call at any time.</p>
+          <!-- PLACEHOLDER: add the hospital's own story here once confirmed
+               (for example: when it opened, its mission, its team). Do not add facts that are not verified. -->
+          <!-- PLACEHOLDER: add a REAL photo of the hospital here when you have one, for example:
+               <img src="images/hospital-front.jpg" alt="Front of Light Shade Hospital and Maternity Home" width="800" height="600">
+               Only use real, permitted photos. Never use stock photos and call them the hospital. -->
+        </div>
+        <dl class="facts">
+          <div><dt>Location</dt><dd>Davies Road, Ayobo, Lagos</dd></div>
+          <div><dt>Opening hours</dt><dd data-text="hours">24 hours</dd></div>
+          <div><dt>Care areas</dt><dd>Emergency and general care, mother and child, diagnostics, therapy and specialty care</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SERVICES  (all 17 supplied services, in 4 groups)
+         ===================================================== -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="services-title">Our medical services</h2>
+          <p>Seventeen services, grouped so you can find what you need quickly. Call us to ask about a specific service.</p>
+        </div>
+
+        <div class="service-group">
+          <div>
+            <h3>Emergency and general care</h3>
+            <p>For sudden illness and everyday health needs.</p>
+          </div>
+          <ul class="service-grid">
+            <li><strong>Emergency care</strong><span>Urgent care for sudden illness or injury.</span></li>
+            <li><strong>General medical services</strong><span>Consultation and treatment for common health concerns.</span></li>
+            <li><strong>Specialist clinics</strong><span>Clinics focused on specific health needs.</span></li>
+            <li><strong>Surgeries</strong><span>Surgical care. Call to ask about specific procedures.</span></li>
+          </ul>
+        </div>
+
+        <div class="service-group">
+          <div>
+            <h3>Mother and child</h3>
+            <p>Care for women and children, from pregnancy through childhood.</p>
+          </div>
+          <ul class="service-grid">
+            <li><strong>Antenatal care</strong><span>Check-ups and care during pregnancy.</span></li>
+            <li><strong>Labour and delivery</strong><span>Care for mothers during childbirth.</span></li>
+            <li><strong>Gynecology clinic</strong><span>Care for women's reproductive health.</span></li>
+            <li><strong>Family planning</strong><span>Guidance on planning your family.</span></li>
+            <li><strong>Pediatric care</strong><span>Healthcare for babies and children.</span></li>
+            <li><strong>Immunization</strong><span>Vaccination services.</span></li>
+          </ul>
+        </div>
+
+        <div class="service-group">
+          <div>
+            <h3>Diagnostics</h3>
+            <p>Tests and scans that help explain what is happening.</p>
+          </div>
+          <ul class="service-grid">
+            <li><strong>Laboratory services</strong><span>Tests that support diagnosis and treatment.</span></li>
+            <li><strong>X-ray services</strong><span>Imaging to help doctors see inside the body.</span></li>
+            <li><strong>Ultrasound scans</strong><span>Scans that use sound waves to make images.</span></li>
+          </ul>
+        </div>
+
+        <div class="service-group">
+          <div>
+            <h3>Therapy and specialty care</h3>
+            <p>Rehabilitation, counseling, dental and eye care.</p>
+          </div>
+          <ul class="service-grid">
+            <li><strong>Physiotherapy</strong><span>Movement and rehabilitation therapy.</span></li>
+            <li><strong>Dental services</strong><span>Care for teeth and gums.</span></li>
+            <li><strong>Counseling unit</strong><span>A place to talk through personal or family concerns.</span></li>
+            <li><strong>Eye clinic</strong><span>Care for eye and vision concerns.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         MATERNITY AND WOMEN'S HEALTH
+         ===================================================== -->
+    <section class="section section--mist" id="maternity" aria-labelledby="maternity-title">
+      <div class="container split">
+        <div>
+          <h2 id="maternity-title">Maternity and women’s health</h2>
+          <p>Support for women and families, from pregnancy and childbirth to care for babies and children. Call us to ask about booking or to find out what to bring.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" data-link="tel" href="tel:+2348060777760">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+              Call about maternity care
+            </a>
+            <a class="btn btn-outline" data-link="whatsapp" target="_blank" rel="noopener" href="https://wa.me/2348060777760">
+              <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
+              Message on WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="maternity-panel">
+          <h3>Maternity and family care</h3>
+          <ul class="check-list">
+            <li>Antenatal care</li>
+            <li>Labour and delivery</li>
+            <li>Gynecology clinic</li>
+            <li>Family planning</li>
+            <li>Pediatric care</li>
+            <li>Immunization</li>
+          </ul>
+          <p>Ultrasound scans are listed under <a href="#diagnostics">Diagnostics</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         DIAGNOSTICS
+         ===================================================== -->
+    <section class="section" id="diagnostics" aria-labelledby="diagnostics-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="diagnostics-title">Diagnostics</h2>
+          <p>Laboratory tests, X-rays and ultrasound scans help doctors understand your health and plan care.</p>
+        </div>
+        <div class="diag-grid">
+          <article class="card">
+            <svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg>
+            <h3>Laboratory services</h3>
+            <p>Tests that support diagnosis and treatment.</p>
+          </article>
+          <article class="card">
+            <svg class="icon" aria-hidden="true"><use href="#i-scan"/></svg>
+            <h3>X-ray services</h3>
+            <p>Imaging to help doctors see inside the body.</p>
+          </article>
+          <article class="card">
+            <svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg>
+            <h3>Ultrasound scans</h3>
+            <p>Scans that use sound waves to make images.</p>
+          </article>
+        </div>
+        <p class="diag-note">Please call to ask about specific tests and scans.</p>
+        <a class="btn btn-primary" data-link="tel" href="tel:+2348060777760">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+          Call about diagnostics
+        </a>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         EMERGENCY
+         ===================================================== -->
+    <section class="section emergency on-dark" id="emergency" aria-labelledby="emergency-title">
+      <div class="container emergency-inner">
+        <div>
+          <h2 id="emergency-title">Need urgent care? Call us now.</h2>
+          <p>For urgent needs, please call the hospital rather than send a message. Open <span data-text="hours">24 hours</span>.</p>
+        </div>
+        <div class="emergency-actions">
+          <a class="emergency-number" data-link="tel" href="tel:+2348060777760">
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+            <span data-text="phone">0806 077 7760</span>
+          </a>
+          <a class="btn btn-outline-light" data-link="maps" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=Along%20Camp%2C%201%20Alhaji%20Fatai%20Shittu%20Street%2C%20by%20Alhaji%20Hassan%20Bus%20Stop%2C%20Davies%20Road%2C%20Ayobo%2C%20Lagos%2C%20Nigeria">
+            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+            Get directions
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         CONTACT
+         ===================================================== -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="contact-title">Contact and directions</h2>
+          <p>Call, message or get directions to the hospital.</p>
+        </div>
+        <div class="contact-grid">
+          <article class="card">
+            <h3>Address</h3>
+            <address data-text="address">Along Camp, 1 Alhaji Fatai Shittu Street, by Alhaji Hassan Bus Stop, Davies Road, Ayobo, Lagos, Nigeria</address>
+            <div class="btn-row">
+              <a class="btn btn-primary" data-link="maps" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&query=Along%20Camp%2C%201%20Alhaji%20Fatai%20Shittu%20Street%2C%20by%20Alhaji%20Hassan%20Bus%20Stop%2C%20Davies%20Road%2C%20Ayobo%2C%20Lagos%2C%20Nigeria">
+                <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                Get directions
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Telephone</h3>
+            <a class="big" data-link="tel" href="tel:+2348060777760"><span data-text="phone">0806 077 7760</span></a>
+            <div class="btn-row">
+              <a class="btn btn-primary" data-link="tel" href="tel:+2348060777760">
+                <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+                Call now
+              </a>
+              <a class="btn btn-outline" data-link="whatsapp" target="_blank" rel="noopener" href="https://wa.me/2348060777760">
+                <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Opening hours</h3>
+            <p class="big" data-text="hours">24 hours</p>
+            <p>Please call to confirm details before you travel.</p>
+          </article>
+        </div>
+        <p class="contact-note">This website gives general information only and is not medical advice. Please do not send personal medical details through this website.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="site-footer on-dark">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img class="logo logo--footer" src="logo.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+            <strong>Light Shade Hospital<br>and Maternity Home</strong>
+          </div>
+          <p>Ayobo, Lagos, Nigeria</p>
+        </div>
+
+        <nav aria-label="Footer">
+          <h2>Quick links</h2>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#maternity">Maternity</a></li>
+            <li><a href="#diagnostics">Diagnostics</a></li>
+            <li><a href="#emergency">Emergency</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2>Contact</h2>
+          <address data-text="address">Along Camp, 1 Alhaji Fatai Shittu Street, by Alhaji Hassan Bus Stop, Davies Road, Ayobo, Lagos, Nigeria</address>
+          <p><a data-link="tel" href="tel:+2348060777760"><span data-text="phone">0806 077 7760</span></a><br>
+             Open <span data-text="hours">24 hours</span></p>
+          <p><a data-link="maps" target="_blank" rel="noopener"
+                href="https://www.google.com/maps/search/?api=1&query=Along%20Camp%2C%201%20Alhaji%20Fatai%20Shittu%20Street%2C%20by%20Alhaji%20Hassan%20Bus%20Stop%2C%20Davies%20Road%2C%20Ayobo%2C%20Lagos%2C%20Nigeria">Get directions</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> Light Shade Hospital and Maternity Home. All rights reserved.</p>
+        <p>Illustrations on this website are not photographs of the hospital.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================
+       CONFIG: the ONE place to edit contact details.
+       Every phone button, WhatsApp button, map button and
+       displayed address/hours on the page reads from here.
+       ========================================================= */
+    const CONFIG = {
+      phoneInternational: "+2348060777760",   // used by tel: links (+234 is Nigeria; the leading 0 is dropped)
+      phoneDisplay: "0806 077 7760",          // what visitors see on screen
+      whatsappNumber: "2348060777760",        // digits only, no + sign. VERIFY the hospital really uses WhatsApp on this number.
+      showWhatsApp: true,                     // set to false to hide every WhatsApp button until verified
+      whatsappMessage: "Hello, I would like to make an enquiry.",
+      address: "Along Camp, 1 Alhaji Fatai Shittu Street, by Alhaji Hassan Bus Stop, Davies Road, Ayobo, Lagos, Nigeria",
+      hours: "24 hours"
+      // FUTURE: add appointmentApiUrl / paymentProvider settings here (never put secret keys in this file).
+    };
+
+    function applyConfig() {
+      const tel  = "tel:" + CONFIG.phoneInternational;
+      const wa   = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(CONFIG.whatsappMessage);
+      const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.address);
+
+      document.querySelectorAll('[data-link="tel"]').forEach(function (a) { a.href = tel; });
+      document.querySelectorAll('[data-link="whatsapp"]').forEach(function (a) {
+        a.href = wa;
+        if (!CONFIG.showWhatsApp) a.hidden = true;
+      });
+      document.querySelectorAll('[data-link="maps"]').forEach(function (a) { a.href = maps; });
+
+      document.querySelectorAll('[data-text="phone"]').forEach(function (el) { el.textContent = CONFIG.phoneDisplay; });
+      document.querySelectorAll('[data-text="address"]').forEach(function (el) { el.textContent = CONFIG.address; });
+      document.querySelectorAll('[data-text="hours"]').forEach(function (el) { el.textContent = CONFIG.hours; });
+    }
+
+    /* =========================================================
+       MOBILE MENU
+       ========================================================= */
+    (function () {
+      var toggle = document.getElementById("menu-toggle");
+      var nav = document.getElementById("site-nav");
+
+      function setMenu(open) {
+        nav.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      }
+
+      toggle.addEventListener("click", function () {
+        setMenu(toggle.getAttribute("aria-expanded") !== "true");
+      });
+      nav.addEventListener("click", function (e) {            // close after choosing a link
+        if (e.target.closest("a")) setMenu(false);
+      });
+      document.addEventListener("keydown", function (e) {     // Escape closes the menu
+        if (e.key === "Escape" && nav.classList.contains("is-open")) { setMenu(false); toggle.focus(); }
+      });
+      document.addEventListener("click", function (e) {       // tapping outside closes it
+        if (!e.target.closest(".site-header")) setMenu(false);
+      });
+      window.addEventListener("resize", function () {         // reset when rotating to a wide screen
+        if (window.innerWidth >= 992) setMenu(false);
+      });
+    })();
+
+    /* =========================================================
+       HIGHLIGHT THE CURRENT SECTION IN THE MENU
+       ========================================================= */
+    (function () {
+      if (!("IntersectionObserver" in window)) return;
+      var links = Array.prototype.slice.call(document.querySelectorAll('.site-nav a[href^="#"]'));
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (l) {
+            if (l.getAttribute("href") === "#" + entry.target.id) l.setAttribute("aria-current", "location");
+            else l.removeAttribute("aria-current");
+          });
+        });
+      }, { rootMargin: "-40% 0px -55% 0px" });
+      links.forEach(function (l) {
+        var section = document.getElementById(l.getAttribute("href").slice(1));
+        if (section) observer.observe(section);
+      });
+    })();
+
+    /* =========================================================
+       START UP
+       ========================================================= */
+    applyConfig();
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* FUTURE EXPANSION NOTES
+       - Separate files: cut the <style> block into styles.css and this <script> into script.js, then link them in <head>.
+       - Appointments/backend: add a new section and call a secure server endpoint. Keep all secrets on the server.
+       - Payments: use a hosted checkout from a payment provider. Never handle card details in this file. */
+  </script>
+</body>
+</html>
